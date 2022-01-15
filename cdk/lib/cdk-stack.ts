@@ -18,11 +18,9 @@ export class TwitchLiveClockStack extends Stack {
       {
         entry: 'src/handler.ts',
         runtime: Runtime.NODEJS_14_X,
-        // code: lambda.Code.fromAsset(
-        //   path.resolve(__dirname, './lambda/start-time-handler')
-        // ),
         environment: {
-          TWITCH_BEARER_TOKEN: process.env.TWITCH_BEARER_TOKEN ?? '',
+          TWITCH_CLIENT_ID: process.env.TWITCH_CLIENT_ID ?? '',
+          TWITCH_APP_ACCESS_TOKEN: process.env.TWITCH_APP_ACCESS_TOKEN ?? '',
         },
         timeout: Duration.seconds(30),
       }
