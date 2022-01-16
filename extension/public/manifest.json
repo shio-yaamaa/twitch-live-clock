@@ -2,7 +2,7 @@
   "manifest_version": 3,
 
   "name": "Twitch Live Clock",
-  "description": "The clock of the time when the stream was broadcasted",
+  "description": "The clock of the time when the video was live-streamed",
   "version": "0.1.0",
 
   "icons": {
