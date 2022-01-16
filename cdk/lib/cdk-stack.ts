@@ -27,11 +27,11 @@ export class TwitchLiveClockStack extends Stack {
     );
 
     const api = new apigateway.HttpApi(this, 'TwitchLiveClockApi', {
-      // corsPreflight: {
-      //   allowOrigins: ['*'],
-      //   allowMethods: [apigateway.CorsHttpMethod.ANY],
-      //   allowHeaders: ['*'],
-      // },
+      corsPreflight: {
+        allowOrigins: ['*'],
+        allowMethods: [apigateway.CorsHttpMethod.ANY],
+        allowHeaders: ['*'],
+      },
     });
     api.addRoutes({
       path: '/start-time',
