@@ -1,0 +1,32 @@
+{
+  "name": "twitch-live-clock-extension",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "watch": "webpack --config webpack/webpack.dev.js --watch",
+    "build": "yarn clean && webpack --config webpack/webpack.prod.js",
+    "build-dev": "yarn clean && webpack --config webpack/webpack.dev.js",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.6"
+  },
+  "devDependencies": {
+    "@types/chrome": "0.0.143",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "copy-webpack-plugin": "^9.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-react": "^7.21.5",
+    "glob": "^7.1.6",
+    "prettier": "^2.2.1",
+    "rimraf": "^3.0.2 ",
+    "ts-loader": "^9.2.5",
+    "typescript": "~3.8.3 ",
+    "webpack": "^5.52.1",
+    "webpack-cli": "~4.8.0",
+    "webpack-merge": "~5.8.0"
+  }
+}

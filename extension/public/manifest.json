@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+
+  "name": "Twitch Live Clock",
+  "description": "The clock of the time when the stream was broadcasted",
+  "version": "0.1.0",
+
+  "icons": {
+    "16": "/images/icon16.png",
+    "32": "/images/icon32.png",
+    "48": "/images/icon48.png",
+    "128": "/images/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "/images/icon16.png",
+      "32": "/images/icon32.png",
+      "48": "/images/icon48.png",
+      "128": "/images/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.twitch.tv/videos/*"],
+      "css": [],
+      "js": ["contentScript.js"]
+    }
+  ],
+
+  "permissions": ["storage"]
+}
