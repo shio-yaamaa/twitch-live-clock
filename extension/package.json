@@ -11,7 +11,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "dayjs": "^1.10.6"
+    "dayjs": "^1.10.7"
   },
   "devDependencies": {
     "@types/chrome": "0.0.143",
