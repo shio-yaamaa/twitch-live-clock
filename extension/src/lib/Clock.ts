@@ -86,6 +86,13 @@ export class Clock {
     if (!parent || !remainingTimeElement) {
       return;
     }
+    // If another clock is already inserted, do nothing
+    if (
+      remainingTimeElement.getAttribute('data-a-target') !==
+      'player-seekbar-duration'
+    ) {
+      return;
+    }
     parent.insertBefore(this.clockElement, remainingTimeElement);
   }
 
