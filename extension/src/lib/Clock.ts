@@ -11,14 +11,12 @@ export class Clock {
   private clockElement: HTMLElement | null;
   private watchTimeElement: HTMLElement | null;
   private observer: MutationObserver | null;
-  private readyListener: (() => void) | null;
 
   constructor(startTime: DateTime) {
     this.startTime = startTime;
     this.watchTimeElement = null;
     this.clockElement = null;
     this.observer = null;
-    this.readyListener = null;
   }
 
   public async mountWhenReady() {
@@ -41,14 +39,6 @@ export class Clock {
     this.observer?.disconnect();
   }
 
-  public setReadyListener(listener: () => void) {
-    this.readyListener = listener;
-  }
-
-  public getWatchTimeElement(): HTMLElement | null {
-    return this.watchTimeElement;
-  }
-
   private async waitForPlayerReady(): Promise<void> {
     return new Promise((resolve) => {
       const checkPlayerReady = () => {
@@ -60,7 +50,6 @@ export class Clock {
             '[Twitch Live Clock] watchTimeElement found:',
             this.watchTimeElement
           );
-          this.readyListener && this.readyListener();
           resolve();
         } else {
           console.log('[Twitch Live Clock] watchTimeElement not found');

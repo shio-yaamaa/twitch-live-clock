@@ -1,35 +1,31 @@
 import { Clock } from './lib/Clock';
-import { PageLifecycleObserver } from './lib/PageLifecycleObserver';
+import { URLObserver } from './lib/URLObserver';
 import { getStartTime } from './lib/twitchApi';
 import { getVideoIdFromUrl } from './lib/url';
 
-const observer = new PageLifecycleObserver(500);
+const observer = new URLObserver(500);
 observer.observe();
 
 const main = async () => {
+  const clock = await createClock();
+  observer.setURLChangeListener(() => {
+    clock?.unmount();
+    main();
+  });
+  await clock?.mountWhenReady();
+};
+
+const createClock = async (): Promise<Clock | null> => {
   const videoId = getVideoIdFromUrl(new URL(window.location.href));
   console.log('[Twitch Live Clock] Video ID:', videoId);
   if (!videoId) {
-    return;
+    return null;
   }
   const startTime = await getStartTime(videoId);
   if (!startTime) {
-    return;
+    return null;
   }
-
-  const clock = new Clock(startTime);
-
-  clock.setReadyListener(() => {
-    const lifecycleReferenceElement = clock.getWatchTimeElement();
-    lifecycleReferenceElement &&
-      observer.setTargetElement(lifecycleReferenceElement);
-  });
-  observer.setPageChangeEventListener(() => {
-    clock.unmount();
-    main();
-  });
-
-  await clock.mountWhenReady();
+  return new Clock(startTime);
 };
 
 main();
