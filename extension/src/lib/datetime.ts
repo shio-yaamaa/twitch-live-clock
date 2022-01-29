@@ -43,5 +43,5 @@ export const calculateStreamedTime = (
 };
 
 export const formatDateTime = (datetime: DateTime): string => {
-  return datetime.format();
+  return datetime.format('YYYY/M/D H:mm:ss (Z)');
 };
