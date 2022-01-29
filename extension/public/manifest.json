@@ -25,7 +25,5 @@
       "css": [],
       "js": ["contentScript.js"]
     }
-  ],
-
-  "permissions": ["storage"]
+  ]
 }
