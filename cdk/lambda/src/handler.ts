@@ -1,8 +1,10 @@
+import dayjs from 'dayjs';
 import {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
   Handler,
 } from 'aws-lambda';
+import { BigQueryClient } from './bigquery';
 import { getVideo } from './twitchApi';
 
 export const handler: Handler = async (
@@ -26,6 +28,18 @@ export const handler: Handler = async (
       body: 'Not Found',
     };
   }
+
+  const db = new BigQueryClient({
+    projectId: process.env.BIGQUERY_PROJECT_ID ?? '',
+    datasetId: process.env.BIGQUERY_DATASET_ID ?? '',
+    tableId: process.env.BIGQUERY_TABLE_ID ?? '',
+  });
+  await db.log({
+    videoId: video.id,
+    userId: video.user_id,
+    userName: video.user_name,
+    accessedAt: dayjs().format(),
+  });
 
   return {
     statusCode: 200,
