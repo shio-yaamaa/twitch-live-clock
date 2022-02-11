@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@google-cloud/bigquery": "^5.10.0",
+    "aws-lambda": "^1.0.7",
     "axios": "^0.25.0",
     "dayjs": "^1.10.7",
     "request": "^2.88.2"
