@@ -15,7 +15,7 @@ export class TwitchLiveClockStack extends Stack {
     const handler = new Function(this, 'TwitchLiveClockStartTimeHandler', {
       runtime: Runtime.NODEJS_14_X,
       handler: 'dist/handler.handler',
-      code: Code.fromAsset(path.join(__dirname, '../lambda/dist')),
+      code: Code.fromAsset(path.join(__dirname, '../lambda')),
       environment: {
         TWITCH_CLIENT_ID: process.env.TWITCH_CLIENT_ID ?? '',
         TWITCH_APP_ACCESS_TOKEN: process.env.TWITCH_APP_ACCESS_TOKEN ?? '',
