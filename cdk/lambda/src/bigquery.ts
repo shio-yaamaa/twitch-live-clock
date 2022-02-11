@@ -27,9 +27,9 @@ export class BigQueryClient {
   }
 
   public async log(entry: LogEntry) {
-    const table = [this.projectId, this.datasetId, this.tableId].join();
+    const table = [this.projectId, this.datasetId, this.tableId].join('.');
     const query = `INSERT INTO \`${table}\` (video_id, user_id, user_name, accessed_at)
-      VALUES (${entry.videoId}, ${entry.userId}, ${entry.userName}, ${entry.accessedAt})`;
+      VALUES ("${entry.videoId}", "${entry.userId}", "${entry.userName}", "${entry.accessedAt}")`;
 
     await this.client.createQueryJob({
       query,
