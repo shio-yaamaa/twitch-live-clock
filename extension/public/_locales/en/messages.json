@@ -1,0 +1,8 @@
+{
+  "appName": {
+    "message": "Twitch Live Clock"
+  },
+  "appDesc": {
+    "message": "The clock of the time when the past broadcasts on Twitch was live-streamed"
+  }
+}

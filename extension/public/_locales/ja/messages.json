@@ -1,0 +1,8 @@
+{
+  "appName": {
+    "message": "Twitch Live Clock"
+  },
+  "appDesc": {
+    "message": "Twitch配信アーカイブの配信当時の時刻を表示します"
+  }
+}

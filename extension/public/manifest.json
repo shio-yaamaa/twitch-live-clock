@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
 
-  "name": "Twitch Live Clock",
-  "description": "The clock of the time when the video was live-streamed",
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
   "version": "0.1.0",
 
   "icons": {
