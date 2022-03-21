@@ -5,20 +5,31 @@ import {
   Handler,
 } from 'aws-lambda';
 import { BigQueryClient } from './bigquery';
-import { getVideo } from './twitchApi';
+import { getAppAccessToken, getVideo } from './twitchApi';
 
 export const handler: Handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   const twitchClientId = process.env.TWITCH_CLIENT_ID;
-  const twitchAppAccessToken = process.env.TWITCH_APP_ACCESS_TOKEN;
-  if (!twitchClientId || !twitchAppAccessToken) {
+  const twitchClientSecret = process.env.TWITCH_CLIENT_SECRET;
+  if (!twitchClientId || !twitchClientSecret) {
     throw new Error('Invalid environment variables');
   }
 
   const videoId = event.queryStringParameters?.videoId;
   if (!videoId) {
     throw new Error('Invalid query parameters: videoId required');
+  }
+
+  const twitchAppAccessToken = await getAppAccessToken(
+    twitchClientId,
+    twitchClientSecret
+  );
+  if (!twitchAppAccessToken) {
+    return {
+      statusCode: 400,
+      body: 'Authentication Failed',
+    };
   }
 
   const video = await getVideo(twitchClientId, twitchAppAccessToken, videoId);

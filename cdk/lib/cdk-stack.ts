@@ -18,7 +18,7 @@ export class TwitchLiveClockStack extends Stack {
       code: Code.fromAsset(path.join(__dirname, '../lambda')),
       environment: {
         TWITCH_CLIENT_ID: process.env.TWITCH_CLIENT_ID ?? '',
-        TWITCH_APP_ACCESS_TOKEN: process.env.TWITCH_APP_ACCESS_TOKEN ?? '',
+        TWITCH_CLIENT_SECRET: process.env.TWITCH_CLIENT_SECRET ?? '',
         GOOGLE_APPLICATION_CREDENTIALS: './bigquery-service-account-key.json',
         BIGQUERY_PROJECT_ID: process.env.BIGQUERY_PROJECT_ID ?? '',
         BIGQUERY_DATASET_ID: process.env.BIGQUERY_DATASET_ID ?? '',
