@@ -8,14 +8,14 @@ import { copyClasses } from './dom';
 
 export class Clock {
   private startTime: DateTime;
-  private clockElement: HTMLElement | null;
-  private watchTimeElement: HTMLElement | null;
+  private clockElements: HTMLElement[];
+  private watchTimeElements: HTMLElement[];
   private observer: MutationObserver | null;
 
   constructor(startTime: DateTime) {
     this.startTime = startTime;
-    this.watchTimeElement = null;
-    this.clockElement = null;
+    this.clockElements = [];
+    this.watchTimeElements = [];
     this.observer = null;
   }
 
@@ -25,8 +25,8 @@ export class Clock {
     this.observer = new MutationObserver(() => {
       this.updateClock();
     });
-    if (this.watchTimeElement) {
-      this.observer.observe(this.watchTimeElement, {
+    if (this.watchTimeElements.length > 0) {
+      this.observer.observe(this.watchTimeElements[0], {
         subtree: true,
         characterData: true,
       });
@@ -35,24 +35,28 @@ export class Clock {
 
   public unmount() {
     console.log('[Twitch Live Clock] Unmounted');
-    this.clockElement?.remove();
+    for (const clockElement of this.clockElements) {
+      clockElement.remove();
+    }
     this.observer?.disconnect();
   }
 
   private async waitForPlayerReady(): Promise<void> {
     return new Promise((resolve) => {
       const checkPlayerReady = () => {
-        this.watchTimeElement = document.querySelector(
-          '[data-a-target="player-seekbar-current-time"]'
+        this.watchTimeElements = Array.from(
+          document.querySelectorAll(
+            '[data-a-target="player-seekbar-current-time"]'
+          )
         );
-        if (this.watchTimeElement) {
+        if (this.watchTimeElements.length > 0) {
           console.log(
-            '[Twitch Live Clock] watchTimeElement found:',
-            this.watchTimeElement
+            '[Twitch Live Clock] watchTimeElements found:',
+            this.watchTimeElements
           );
           resolve();
         } else {
-          console.log('[Twitch Live Clock] watchTimeElement not found');
+          console.log('[Twitch Live Clock] watchTimeElements not found');
           window.setTimeout(checkPlayerReady, 500);
         }
       };
@@ -61,39 +65,41 @@ export class Clock {
   }
 
   private insertClock() {
-    // Create and initialize the clock element
-    if (!this.watchTimeElement) {
-      return;
-    }
-    this.clockElement = document.createElement('p');
-    copyClasses(this.watchTimeElement, this.clockElement);
-    this.updateClock();
+    for (const watchTimeElement of this.watchTimeElements) {
+      // Create and initialize the clock element
+      const clockElement = document.createElement('p');
+      this.clockElements.push(clockElement);
+      copyClasses(watchTimeElement, clockElement);
 
-    // Insert the clock element
-    const parent = this.watchTimeElement.parentElement;
-    const remainingTimeElement = this.watchTimeElement.nextElementSibling;
-    if (!parent || !remainingTimeElement) {
-      return;
+      // Insert the clock element
+      const parent = watchTimeElement.parentElement;
+      const remainingTimeElement = watchTimeElement.nextElementSibling;
+      if (!parent || !remainingTimeElement) {
+        continue;
+      }
+      // If another clock is already inserted, do nothing
+      if (
+        remainingTimeElement.getAttribute('data-a-target') !==
+        'player-seekbar-duration'
+      ) {
+        continue;
+      }
+      parent.insertBefore(clockElement, remainingTimeElement);
     }
-    // If another clock is already inserted, do nothing
-    if (
-      remainingTimeElement.getAttribute('data-a-target') !==
-      'player-seekbar-duration'
-    ) {
-      return;
-    }
-    parent.insertBefore(this.clockElement, remainingTimeElement);
+    this.updateClock();
   }
 
   private updateClock() {
-    if (!this.clockElement || !this.watchTimeElement) {
+    if (this.watchTimeElements.length === 0) {
       return;
     }
-    const watchTime = parseWatchTime(this.watchTimeElement.innerText);
+    const watchTime = parseWatchTime(this.watchTimeElements[0].innerText);
     if (!watchTime) {
       return;
     }
     const streamedTime = calculateStreamedTime(this.startTime, watchTime);
-    this.clockElement.textContent = formatDateTime(streamedTime);
+    for (const clockElement of this.clockElements) {
+      clockElement.textContent = formatDateTime(streamedTime);
+    }
   }
 }
