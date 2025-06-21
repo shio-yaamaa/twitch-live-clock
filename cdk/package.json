@@ -32,7 +32,7 @@
     "eslint": "^7.32.0",
     "source-map-support": "^0.5.16"
   },
-  "resolutions": {
+  "overrides": {
     "colors": "1.4.0"
   }
 }
