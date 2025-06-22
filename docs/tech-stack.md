@@ -16,3 +16,4 @@
 - CDK
 - Lambda
 - Twitch API
+- BigQuery
