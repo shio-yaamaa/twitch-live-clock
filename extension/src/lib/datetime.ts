@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 
 export type DateTime = dayjs.Dayjs;
 
@@ -13,7 +13,7 @@ export const parseISO8601 = (text: string): DateTime => {
 };
 
 export const parseWatchTime = (watchTime: string): Duration | null => {
-  const split = watchTime.split(':').map((item) => parseInt(item));
+  const split = watchTime.split(":").map((item) => parseInt(item));
   switch (split.length) {
     case 2:
       return {
@@ -34,14 +34,14 @@ export const parseWatchTime = (watchTime: string): Duration | null => {
 
 export const calculateStreamedTime = (
   startTime: DateTime,
-  watchTime: Duration
+  watchTime: Duration,
 ): DateTime => {
   return startTime
-    .add(watchTime.hours, 'hour')
-    .add(watchTime.minutes, 'minute')
-    .add(watchTime.seconds, 'second');
+    .add(watchTime.hours, "hour")
+    .add(watchTime.minutes, "minute")
+    .add(watchTime.seconds, "second");
 };
 
 export const formatDateTime = (datetime: DateTime): string => {
-  return datetime.format('YYYY/M/D H:mm:ss (Z)');
+  return datetime.format("YYYY/M/D H:mm:ss (Z)");
 };

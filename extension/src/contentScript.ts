@@ -1,7 +1,7 @@
-import { Clock } from './lib/Clock';
-import { URLObserver } from './lib/URLObserver';
-import { getStartTime } from './lib/twitchApi';
-import { getVideoIdFromUrl } from './lib/url';
+import { Clock } from "./lib/Clock";
+import { getStartTime } from "./lib/twitchApi";
+import { URLObserver } from "./lib/URLObserver";
+import { getVideoIdFromUrl } from "./lib/url";
 
 const observer = new URLObserver(500);
 observer.observe();
@@ -17,7 +17,7 @@ const main = async () => {
 
 const createClock = async (): Promise<Clock | null> => {
   const videoId = getVideoIdFromUrl(new URL(window.location.href));
-  console.log('[Twitch Live Clock] Video ID:', videoId);
+  console.log("[Twitch Live Clock] Video ID:", videoId);
   if (!videoId) {
     return null;
   }

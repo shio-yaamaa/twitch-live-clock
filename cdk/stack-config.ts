@@ -1,6 +1,6 @@
-export type Environment = 'prod' | 'dev';
+export type Environment = "prod" | "dev";
 
-export const environments: Environment[] = ['prod', 'dev'];
+export const environments: Environment[] = ["prod", "dev"];
 
 export interface StackConfig {
   environment: Environment;
@@ -9,11 +9,11 @@ export interface StackConfig {
 
 export const configs: Record<Environment, StackConfig> = {
   prod: {
-    environment: 'prod',
-    resourceNameSuffix: '',
+    environment: "prod",
+    resourceNameSuffix: "",
   },
   dev: {
-    environment: 'dev',
-    resourceNameSuffix: 'Dev',
+    environment: "dev",
+    resourceNameSuffix: "Dev",
   },
 };
