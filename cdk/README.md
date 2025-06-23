@@ -1,8 +1,14 @@
 # Commands
 
-- `yarn cdk deploy`
-- `yarn cdk diff`
-- `yarn cdk synth`
+```sh
+# Prod
+npx cdk diff TwitchLiveClockStack
+npx cdk deploy TwitchLiveClockStack
+
+# Dev
+npx cdk diff TwitchLiveClockStackDev
+npx cdk deploy TwitchLiveClockStackDev
+```
 
 # Invoking API
 
