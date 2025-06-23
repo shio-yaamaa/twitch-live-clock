@@ -15,5 +15,6 @@
 - Jest
 - CDK
 - Lambda
+- API Gateway
 - Twitch API
 - BigQuery
