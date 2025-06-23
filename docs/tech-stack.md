@@ -1,10 +1,9 @@
 # Common
 
-- ESLint
-- Prettier
-- EditorConfig
 - TypeScript
 - Yarn
+- Biome
+- EditorConfig
 
 # Extension
 
