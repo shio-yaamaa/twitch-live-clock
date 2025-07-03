@@ -1,34 +1,34 @@
-import * as dayjs from 'dayjs';
-import {
+import type {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
   Handler,
-} from 'aws-lambda';
-import { BigQueryClient } from './bigquery';
-import { getAppAccessToken, getVideo } from './twitchApi';
+} from "aws-lambda";
+import dayjs from "dayjs";
+import { BigQueryClient } from "./bigquery";
+import { getAppAccessToken, getVideo } from "./twitchApi";
 
 export const handler: Handler = async (
-  event: APIGatewayProxyEvent
+  event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
   const twitchClientId = process.env.TWITCH_CLIENT_ID;
   const twitchClientSecret = process.env.TWITCH_CLIENT_SECRET;
   if (!twitchClientId || !twitchClientSecret) {
-    throw new Error('Invalid environment variables');
+    throw new Error("Invalid environment variables");
   }
 
   const videoId = event.queryStringParameters?.videoId;
   if (!videoId) {
-    throw new Error('Invalid query parameters: videoId required');
+    throw new Error("Invalid query parameters: videoId required");
   }
 
   const twitchAppAccessToken = await getAppAccessToken(
     twitchClientId,
-    twitchClientSecret
+    twitchClientSecret,
   );
   if (!twitchAppAccessToken) {
     return {
       statusCode: 400,
-      body: 'Authentication Failed',
+      body: "Authentication Failed",
     };
   }
 
@@ -36,14 +36,14 @@ export const handler: Handler = async (
   if (!video) {
     return {
       statusCode: 404,
-      body: 'Not Found',
+      body: "Not Found",
     };
   }
 
   const db = new BigQueryClient({
-    projectId: process.env.BIGQUERY_PROJECT_ID ?? '',
-    datasetId: process.env.BIGQUERY_DATASET_ID ?? '',
-    tableId: process.env.BIGQUERY_TABLE_ID ?? '',
+    projectId: process.env.BIGQUERY_PROJECT_ID ?? "",
+    datasetId: process.env.BIGQUERY_DATASET_ID ?? "",
+    tableId: process.env.BIGQUERY_TABLE_ID ?? "",
   });
   await db.log({
     videoId: video.id,

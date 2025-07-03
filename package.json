@@ -1,0 +1,14 @@
+{
+  "name": "twitch-live-clock",
+  "version": "1.0.0",
+  "homepage": "https://github.com/shio-yaamaa/twitch-live-clock#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shio-yaamaa/twitch-live-clock.git"
+  },
+  "license": "ISC",
+  "private": true,
+  "devDependencies": {
+    "@biomejs/biome": "2.0.4"
+  }
+}

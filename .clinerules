@@ -1,0 +1,8 @@
+# Instructions
+
+- Before starting any work, read all documentation in the `/docs` directory to understand the project structure, technology stack, and coding rules.
+- Proceed with development tasks one step at a time, confirming with the user before moving to the next task or changing approach.
+- When suggesting code changes, ensure they follow the coding standards described in `/docs/coding-rules.md`.
+- When working with the extension code, consider browser compatibility and performance implications.
+- For backend modifications, ensure AWS CDK best practices are followed.
+- When implementation is changed, update the relevant documentation in the `/docs` directory to maintain consistency between code and documentation.

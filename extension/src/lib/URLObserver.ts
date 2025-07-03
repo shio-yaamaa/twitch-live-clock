@@ -12,8 +12,8 @@ export class URLObserver {
   public observe() {
     const observe = () => {
       if (this.checkURLChange()) {
-        console.log('[Twitch Live Clock] URL change detected');
-        this.listener && this.listener();
+        console.log("[Twitch Live Clock] URL change detected");
+        this.listener?.();
       }
       setTimeout(observe, this.interval);
     };

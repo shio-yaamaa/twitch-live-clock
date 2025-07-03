@@ -1,17 +1,17 @@
-import axios, { AxiosResponse } from 'axios';
-import { URL } from 'url';
+import axios, { type AxiosResponse } from "axios";
+import { URL } from "url";
 
-import { TwitchVideo } from './types';
+import type { TwitchVideo } from "./types";
 
 export const getAppAccessToken = async (
   clientId: string,
-  clientSecret: string
+  clientSecret: string,
 ): Promise<string | null> => {
-  const url = new URL('https://id.twitch.tv/oauth2/token');
-  url.searchParams.append('client_id', clientId);
-  url.searchParams.append('client_secret', clientSecret);
-  url.searchParams.append('grant_type', 'client_credentials');
-  url.searchParams.append('scope', '');
+  const url = new URL("https://id.twitch.tv/oauth2/token");
+  url.searchParams.append("client_id", clientId);
+  url.searchParams.append("client_secret", clientSecret);
+  url.searchParams.append("grant_type", "client_credentials");
+  url.searchParams.append("scope", "");
 
   let response: AxiosResponse<any, any>;
   try {
@@ -24,10 +24,10 @@ export const getAppAccessToken = async (
     } else if (error.request) {
       console.log(error.request);
     } else {
-      console.log('Error', error.message);
+      console.log("Error", error.message);
     }
     console.log(error.config);
-    throw new Error('Request failed');
+    throw new Error("Request failed");
   }
 
   return response.data.access_token;
@@ -36,16 +36,16 @@ export const getAppAccessToken = async (
 export const getVideo = async (
   clientId: string,
   appAccessToken: string,
-  videoId: string
+  videoId: string,
 ): Promise<TwitchVideo | null> => {
-  const url = new URL('https://api.twitch.tv/helix/videos');
-  url.searchParams.append('id', videoId);
+  const url = new URL("https://api.twitch.tv/helix/videos");
+  url.searchParams.append("id", videoId);
 
   let response: AxiosResponse<any, any>;
   try {
     response = await axios.get(url.toString(), {
       headers: {
-        'Client-Id': clientId,
+        "Client-Id": clientId,
         Authorization: `Bearer ${appAccessToken}`,
       },
     });
@@ -61,10 +61,10 @@ export const getVideo = async (
     } else if (error.request) {
       console.log(error.request);
     } else {
-      console.log('Error', error.message);
+      console.log("Error", error.message);
     }
     console.log(error.config);
-    throw new Error('Request failed');
+    throw new Error("Request failed");
   }
 
   const data = response.data;

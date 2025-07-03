@@ -1,10 +1,10 @@
 import {
   calculateStreamedTime,
-  DateTime,
+  type DateTime,
   formatDateTime,
   parseWatchTime,
-} from './datetime';
-import { copyClasses } from './dom';
+} from "./datetime";
+import { copyClasses } from "./dom";
 
 export class Clock {
   private startTime: DateTime;
@@ -34,7 +34,7 @@ export class Clock {
   }
 
   public unmount() {
-    console.log('[Twitch Live Clock] Unmounted');
+    console.log("[Twitch Live Clock] Unmounted");
     for (const clockElement of this.clockElements) {
       clockElement.remove();
     }
@@ -46,17 +46,17 @@ export class Clock {
       const checkPlayerReady = () => {
         this.watchTimeElements = Array.from(
           document.querySelectorAll(
-            '[data-a-target="player-seekbar-current-time"]'
-          )
+            '[data-a-target="player-seekbar-current-time"]',
+          ),
         );
         if (this.watchTimeElements.length > 0) {
           console.log(
-            '[Twitch Live Clock] watchTimeElements found:',
-            this.watchTimeElements
+            "[Twitch Live Clock] watchTimeElements found:",
+            this.watchTimeElements,
           );
           resolve();
         } else {
-          console.log('[Twitch Live Clock] watchTimeElements not found');
+          console.log("[Twitch Live Clock] watchTimeElements not found");
           window.setTimeout(checkPlayerReady, 500);
         }
       };
@@ -67,7 +67,7 @@ export class Clock {
   private insertClock() {
     for (const watchTimeElement of this.watchTimeElements) {
       // Create and initialize the clock element
-      const clockElement = document.createElement('p');
+      const clockElement = document.createElement("p");
       this.clockElements.push(clockElement);
       copyClasses(watchTimeElement, clockElement);
 
@@ -79,8 +79,8 @@ export class Clock {
       }
       // If another clock is already inserted, do nothing
       if (
-        remainingTimeElement.getAttribute('data-a-target') !==
-        'player-seekbar-duration'
+        remainingTimeElement.getAttribute("data-a-target") !==
+        "player-seekbar-duration"
       ) {
         continue;
       }
