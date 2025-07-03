@@ -67,6 +67,8 @@ export const getVideo = async (
     throw new Error("Request failed");
   }
 
+  logRateLimit(response);
+
   const data = response.data;
 
   if (!data.data || data.data.length === 0) {
@@ -74,4 +76,22 @@ export const getVideo = async (
   }
 
   return data.data[0];
+};
+
+const logRateLimit = (response: AxiosResponse<any, any>): void => {
+  const limit = response.headers["ratelimit-limit"];
+  const remaining = response.headers["ratelimit-remaining"];
+  const reset = response.headers["ratelimit-reset"];
+
+  if (limit && remaining && reset) {
+    // The log is intended to be analyzed using CloudWatch Logs Insights
+    console.log(
+      JSON.stringify({
+        type: "twitch-api-rate-limit",
+        limit: parseInt(limit, 10),
+        remaining: parseInt(remaining, 10),
+        reset: parseInt(reset, 10),
+      }),
+    );
+  }
 };
